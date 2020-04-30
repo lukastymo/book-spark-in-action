@@ -7,9 +7,16 @@ import eu.timepit.refined.string.EndsWith
 
 sealed trait AppConfig
 object AppConfig {
-  type PrinceUrl = String Refined EndsWith[W.`"little_prince.txt"`.T]
-  type ClientIds = String Refined EndsWith[W.`"client-ids.log"`.T]
+  type PrinceUrl       = String Refined EndsWith[W.`"little_prince.txt"`.T]
+  type ClientIdsUrl    = String Refined EndsWith[W.`"client-ids.log"`.T]
+  type GithubEventsUrl = String
+  type EmployeesUrl    = String Refined EndsWith[W.`"ghEmployees.txt"`.T]
 }
 
-case class Config(dataPaths: DataPaths)                                extends AppConfig
-case class DataPaths(littlePrinceUrl: PrinceUrl, clientIds: ClientIds) extends AppConfig
+case class Config(dataPaths: DataPaths) extends AppConfig
+case class DataPaths(
+    littlePrinceUrl: PrinceUrl,
+    clientIds: ClientIdsUrl,
+    githubEvents: GithubEventsUrl,
+    employeesUrl: EmployeesUrl
+) extends AppConfig

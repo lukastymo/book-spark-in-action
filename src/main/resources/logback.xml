@@ -10,5 +10,6 @@
     </root>
 
     <logger name="org.apache.spark" level="error" />
+    <logger name="org.apache.hadoop" level="error" />
     <logger name="org.spark_project" level="error" />
 </configuration>
