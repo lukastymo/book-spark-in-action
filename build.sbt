@@ -1,7 +1,8 @@
-ThisBuild / scalaVersion := "2.12.11"
+ThisBuild / scalaVersion := "2.11.12"
+
 ThisBuild / version := "0.1.0-SNAPSHOT"
 ThisBuild / organization := "com.example"
-ThisBuild / organizationName := "exampleeee"
+ThisBuild / organizationName := "example"
 
 lazy val root = (project in file("."))
   .settings(
@@ -13,15 +14,19 @@ lazy val root = (project in file("."))
           "ch.qos.logback"              % "logback-classic"    % "1.2.3",
           "com.github.pureconfig"      %% "pureconfig"         % "0.12.3",
           "io.estatico"                %% "newtype"            % "0.4.3",
-          "eu.timepit"                 %% "refined"            % "0.9.10",
-          "eu.timepit"                 %% "refined-pureconfig" % "0.9.10",
-          "org.typelevel"              %% "cats-core"          % "2.1.1",
-          "org.typelevel"              %% "cats-effect"        % "2.1.1"
+          "eu.timepit"                 %% "refined"            % "0.9.12",
+          "eu.timepit"                 %% "refined-pureconfig" % "0.9.12",
+          "org.typelevel"              %% "cats-core"          % "2.0.0",
+          "org.typelevel"              %% "cats-effect"        % "2.0.0"
         )
   )
 
-// META-INF discarding
 assemblyMergeStrategy in assembly := {
-  case PathList("META-INF", xs @ _*) => MergeStrategy.discard
-  case x                             => MergeStrategy.first
+  case PathList("META-INF", "MANIFEST.MF") => MergeStrategy.discard
+  case PathList("META-INF", "LICENSE")     => MergeStrategy.discard
+  case PathList("META-INF", "NOTICE")      => MergeStrategy.discard
+  case PathList("rootdoc.txt")             => MergeStrategy.discard
+  case _                                   => MergeStrategy.deduplicate
 }
+
+assemblyShadeRules in assembly := Seq(ShadeRule.rename("shapeless.**" -> "new_shapeless.@1").inAll)
